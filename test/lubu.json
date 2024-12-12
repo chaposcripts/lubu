@@ -1,0 +1,8 @@
+{
+    "main":"src/init.lua",
+    "modules":{
+        "add": "src/add.lua",
+        "mul": "src/mul.lua"
+    },
+    "output": "dist/release.lua"
+}
