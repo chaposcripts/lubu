@@ -24,6 +24,10 @@ func GenerateConstants(config config.Config) string {
 	for name, value := range config.Const {
 		fmt.Printf("[LuBu][CONSTANT] Created constant \"%s\" = ", name)
 		fmt.Println(value)
+		constStringVal, isString := value.(string)
+		if isString {
+			value = "\"" + constStringVal + "\""
+		}
 		consts = append(consts, fmt.Sprintf("%s = %v;", name, value))
 	}
 	return strings.Join(consts, "\n")

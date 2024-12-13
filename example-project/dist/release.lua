@@ -24,6 +24,8 @@ LUBU_BUNDLED = true;
 
 --LuBu Constants
 DEV = false;
+BUNDLED = true;
+VERSION = "1.0.0";
 
 --Module add (X:\dev\lubu\example-project\src/add.lua)
 package.preload['add'] = (function(...)
