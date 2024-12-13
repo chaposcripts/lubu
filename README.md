@@ -15,7 +15,8 @@ LuBu is a simple Lua Bundler
     "output":"dist/release.lua"
 }
 ```
-4. use `lubu.exe lubu.json`
+4. use `lubu.exe lubu.json`  
+See `example-project` folder
 
 ## Project folder example
 ```
