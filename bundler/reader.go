@@ -6,6 +6,12 @@ import (
 )
 
 func ConvertFileAsPackage(name, file string, isMain bool) string {
+	label := "MODULE"
+	if isMain {
+		label = "MAIN"
+	}
+	fmt.Printf("[LuBu][%s] Bundling \"%s\" from \"%s\"\n", label, name, file)
+
 	bytes, err := os.ReadFile(file)
 	if err != nil {
 		panic(fmt.Sprintf("Error reading module %s (%s): %s", name, file, err.Error()))

@@ -7,14 +7,24 @@ import (
 	"../config"
 )
 
-func Generate(config config.Config) string {
+func Generate(config config.Config, dir string) string {
 	result := []string{
-		`--[[Bundled using LuBu - Simple Lua Bundler]]`,
+		"LUBU_BUNDLED = true;",
+		"--LuBu Constants\n" + GenerateConstants(config),
 	}
 	for moduleName, modulePath := range config.Modules {
-		fmt.Println("reading", moduleName, modulePath)
-		result = append(result, ConvertFileAsPackage(moduleName, modulePath, false))
+		result = append(result, ConvertFileAsPackage(moduleName, dir+"\\"+modulePath, false))
 	}
-	result = append(result, ConvertFileAsPackage("main", config.Main, true))
+	result = append(result, ConvertFileAsPackage("main", dir+"\\"+config.Main, true))
 	return strings.Join(result, "\n\n")
+}
+
+func GenerateConstants(config config.Config) string {
+	consts := []string{}
+	for name, value := range config.Const {
+		fmt.Printf("[LuBu][CONSTANT] Created constant \"%s\" = ", name)
+		fmt.Println(value)
+		consts = append(consts, fmt.Sprintf("%s = %v;", name, value))
+	}
+	return strings.Join(consts, "\n")
 }

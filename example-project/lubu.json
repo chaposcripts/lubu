@@ -4,5 +4,8 @@
         "add": "src/add.lua",
         "mul": "src/mul.lua"
     },
-    "output": "dist/release.lua"
+    "output": "dist/release.lua",
+    "const": {
+        "DEV": false
+    }
 }
