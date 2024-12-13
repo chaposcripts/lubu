@@ -1,7 +1,7 @@
 <div style="text-align:center"><img src="https://www.blast.hk/attachments/259340/" /></div>
 
 # LuBu
-LuBu is a simple Lua Bundler
+**LuBu** is a simle lua bundler which allows you to combine many lua scripts into one.
 
 ## Examples
 See [`example-project`](https://github.com/chaposcripts/lubu/tree/main/example-project) folder
