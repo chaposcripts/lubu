@@ -17,7 +17,7 @@ LuBu config must have fields "modules", "modules" and "output". Also you can add
 1. `main` - `string` - path to main file
 2. `modules` - `map[string]string` - modules list, where key is module name (using in `require()`), value is a path to module
 3. `output` - `string` - path to bundled file
-4. `const` - `map[string]interface{}` - constants list, where key is variable name and value is a constant value
+4. `const` - `map[string]interface{}` - constants list, where key is variable name and value is a constant value. **Only string, number and bool are supported**
   
 ```json
 {
