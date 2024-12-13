@@ -16,6 +16,7 @@ LuBu is a simple Lua Bundler
 }
 ```
 4. use `lubu.exe lubu.json`
+See `example-project` folder
 
 ## Project folder example
 ```
