@@ -2,7 +2,7 @@ package config
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"os"
 )
 
@@ -16,12 +16,12 @@ type Config struct {
 func ReadConfig(filePath string) Config {
 	bytes, err := os.ReadFile(filePath + "/lubu.json")
 	if err != nil {
-		panic(fmt.Sprintf("Error reading lubu config file %s", err.Error()))
+		log.Fatalf("Error reading lubu config file %s", err.Error())
 	}
 	var config Config
 	err = json.Unmarshal(bytes, &config)
 	if err != nil {
-		panic(fmt.Sprintf("Error reading lubu config file %s", err.Error()))
+		log.Fatalf("[ERROR] Error reading lubu config file %s", err.Error())
 	}
 	return config
 }

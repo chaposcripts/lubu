@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -30,17 +31,18 @@ var lubuLogo = `
 `
 
 func main() {
+	log.SetPrefix("[LuBu]")
 	fmt.Println(lubuLogo)
 	dir := filepath.Dir(os.Args[1])
 	config := config.ReadConfig(dir + "\\")
 	err := os.MkdirAll(strings.Join(strings.Split(config.Output, "/")[:1], "/"), 0755)
 	if err != nil {
-		panic(fmt.Sprintf("Error creating output directory: %s", err.Error()))
+		log.Fatalf("Error creating output directory: %s", err.Error())
 	}
 
 	err = os.WriteFile(dir+"/"+config.Output, []byte(fmt.Sprintf("--[[\n%s\n\tBundled using LuBu - https://github.com/chaposcripts/lubu\n]]\n\n%s", lubuLogo, bundler.Generate(config, dir))), 0644)
 	if err != nil {
-		panic(fmt.Sprintf("Error creating output file: %s", err.Error()))
+		log.Fatalf("Error creating output file: %s", err.Error())
 	}
-	fmt.Println("[LuBu] Done, saved to", dir+"/"+config.Output)
+	log.Printf("Done, saved to \"%s\"", dir+"/"+config.Output)
 }
