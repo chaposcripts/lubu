@@ -10,8 +10,7 @@ import (
 
 func Generate(config config.Config, dir string) string {
 	result := []string{
-		"LUBU_BUNDLED = true;",
-		"--LuBu Constants\n" + GenerateConstants(config),
+		"--LuBu Constants\nLUBU_BUNDLED = true;\n" + GenerateConstants(config),
 	}
 	for moduleName, modulePath := range config.Modules {
 		result = append(result, ConvertFileAsPackage(moduleName, dir+"\\"+modulePath, false))

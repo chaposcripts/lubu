@@ -1,13 +1,10 @@
 {
     "main": "src/init.lua",
     "modules": {
-        "add": "src/add.lua",
-        "mul": "src/mul.lua"
+        "add": "src\\add.lua",
+        "init": "src\\init.lua",
+        "mul": "src\\mul.lua"
     },
     "output": "dist/release.lua",
-    "const": {
-        "DEV": false,
-        "BUNDLED": true,
-        "VERSION": "1.0.0"
-    }
+    "const": {}
 }
