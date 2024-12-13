@@ -34,7 +34,7 @@ LuBu config must have fields "modules", "modules" and "output". Also you can add
     }
 }
 ```
-
+Also you can find auto json generator in `example` folder. Run it using `go run generate-lubu-config.go`
 ## Project folder example
 ```
 my-project/
