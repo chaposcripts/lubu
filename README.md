@@ -49,3 +49,7 @@ my-project/
 1. `git clone https://github.com/chaposcripts/lubu/`
 2. `cd lubu`
 3. `go build` or use `go build && lubu.exe lubu.json` to run it after building
+
+## TODO
+1. add .dll modules support
+2. add resource bundler (ttf, png, etc.)
