@@ -1,7 +1,7 @@
 <div style="text-align:center"><img src="https://www.blast.hk/attachments/259340/" /></div>
 
 # LuBu
-LuBu is a simple Lua Bundler
+**LuBu** is a simle lua bundler which allows you to combine many lua scripts into one.
 
 ## Examples
 See [`example-project`](https://github.com/chaposcripts/lubu/tree/main/example-project) folder
@@ -34,7 +34,7 @@ LuBu config must have fields "modules", "modules" and "output". Also you can add
     }
 }
 ```
-
+Also you can find auto json generator in `example` folder. Run it using `go run generate-lubu-config.go`
 ## Project folder example
 ```
 my-project/
@@ -44,3 +44,12 @@ my-project/
 │   └── mul.lua
 └── lubu.json
 ```
+
+## Building
+1. `git clone https://github.com/chaposcripts/lubu/`
+2. `cd lubu`
+3. `go build` or use `go build && lubu.exe lubu.json` to run it after building
+
+## TODO
+1. add .dll modules support
+2. add resource bundler (ttf, png, etc.)
