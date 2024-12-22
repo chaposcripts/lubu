@@ -8,19 +8,8 @@ import (
 	"../config"
 )
 
-func Generate(config config.Config, dir string) string {
-	result := []string{
-		"--LuBu Constants\nLUBU_BUNDLED = true;\n" + GenerateConstants(config),
-	}
-	for moduleName, modulePath := range config.Modules {
-		result = append(result, ConvertFileAsPackage(moduleName, dir+"\\"+modulePath, false))
-	}
-	result = append(result, ConvertFileAsPackage("main", dir+"\\"+config.Main, true))
-	return strings.Join(result, "\n\n")
-}
-
 func GenerateConstants(config config.Config) string {
-	consts := []string{}
+	consts := []string{"-- LuBu Constants\nLUBU_BUNDLED = true;\n"}
 	for name, value := range config.Const {
 		_, isBool := value.(bool)
 		_, isNumber := value.(float64)
@@ -35,4 +24,9 @@ func GenerateConstants(config config.Config) string {
 		consts = append(consts, fmt.Sprintf("%s = %v;", name, value))
 	}
 	return strings.Join(consts, "\n")
+}
+
+func JsonToLuaTable(json string) string {
+
+	return json
 }

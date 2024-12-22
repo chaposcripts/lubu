@@ -35,6 +35,7 @@ func main() {
 	fmt.Println(lubuLogo)
 	dir := filepath.Dir(os.Args[1])
 	config := config.ReadConfig(dir + "\\")
+
 	err := os.MkdirAll(strings.Join(strings.Split(config.Output, "/")[:1], "/"), 0755)
 	if err != nil {
 		log.Fatalf("Error creating output directory: %s", err.Error())

@@ -20,33 +20,35 @@
 	Bundled using LuBu - https://github.com/chaposcripts/lubu
 ]]
 
+-- LuBu Constants
 LUBU_BUNDLED = true;
 
---LuBu Constants
-VERSION = "1.0.0";
-DEV = false;
-BUNDLED = true;
 
---Module add (X:\dev\lubu\example-project\src/add.lua)
+-- RES
+
+
+
+-- LuBu Bundled Lua Modules
+-- Module add (.\../example-project/src/add.lua)
 package.preload['add'] = (function(...)
 return function(a, b)
     return a + b;
 end
 end)
 
---Module mul (X:\dev\lubu\example-project\src/mul.lua)
+-- Module mul (.\../example-project/src/mul.lua)
 package.preload['mul'] = (function(...)
 return function(a, b)
     return a * b;
 end
 end)
 
---Entry Point main (X:\dev\lubu\example-project\src/init.lua)
-local entry = (function(...)
+-- Entry Point main (.\../example-project/src/init.lua)
+LUBU_BUNDLED_ENTRY_POINT = (function(...)
 local add = require('add');
 local mul = require('mul');
 
 print(add(10, 5));
 print(mul(2, 2));
 end)
-entry();
+LUBU_BUNDLED_ENTRY_POINT();

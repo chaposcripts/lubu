@@ -7,10 +7,12 @@ import (
 )
 
 type Config struct {
-	Main    string                 `json:"main"`
-	Modules map[string]string      `json:"modules"`
-	Output  string                 `json:"output"`
-	Const   map[string]interface{} `json:"const"`
+	Main     string                 `json:"main"`
+	Modules  map[string]string      `json:"modules"`
+	Output   string                 `json:"output"`
+	Const    map[string]interface{} `json:"const"`
+	Dll      map[string]string      `json:"dll"`
+	Resource map[string]string      `json:"resource"`
 }
 
 func ReadConfig(filePath string) Config {

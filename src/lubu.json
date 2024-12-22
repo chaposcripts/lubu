@@ -1,0 +1,9 @@
+{
+    "main": "../example-project/src/init.lua",
+    "modules": {
+        "add": "../example-project/src/add.lua",
+        "mul": "../example-project/src/mul.lua"
+    },
+    "output": "../example-project/dist/release.lua",
+    "const": {}
+}
