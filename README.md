@@ -1,7 +1,7 @@
 <div style="text-align:center"><img src="https://www.blast.hk/attachments/259340/" /></div>
 
 # LuBu
-**LuBu** is a simle lua bundler which allows you to combine many lua scripts into one.
+**LuBu** is a simle lua bundler which allows you to compress .lua and .dll modules into one.
 
 ## Examples
 See [`example-project`](https://github.com/chaposcripts/lubu/tree/main/example-project) folder
@@ -26,6 +26,9 @@ LuBu config must have fields "modules", "modules" and "output". Also you can add
         "add": "src/add.lua",
         "mul": "src/mul.lua"
     },
+    "dll": {
+        "lfs": "../example-project/src/lfs.dll"
+    },
     "output": "dist/release.lua",
     "const": {
         "DEV": false,
@@ -39,6 +42,7 @@ Also you can find auto json generator in `example` folder. Run it using `go run 
 ```
 my-project/
 ├── src/
+│   ├── lfs.dll
 │   ├── init.lua
 │   ├── add.lua
 │   └── mul.lua
