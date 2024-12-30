@@ -15,9 +15,10 @@ See [`example-project`](https://github.com/chaposcripts/lubu/tree/main/example-p
 ## LuBu Config
 LuBu config must have fields "modules", "modules" and "output". Also you can add some constants in "const"
 1. `main` - `string` - path to main file
-2. `modules` - `map[string]string` - modules list, where key is module name (using in `require()`), value is a path to module
-3. `output` - `string` - path to bundled file
-4. `const` - `map[string]interface{}` - constants list, where key is variable name and value is a constant value. **Only string, number and bool are supported**
+2. `modules` - `map[string]string` - **.lua** modules list, where key is module name (using in `require()`), value is a path to module
+3. `dll` - `map[string]string` - **.dll** modules list, where key is module name (using in `require()`), value is a path to module
+4. `output` - `string` - path to bundled file
+5. `const` - `map[string]interface{}` - constants list, where key is variable name and value is a constant value. **Only string, number and bool are supported**
   
 ```json
 {
@@ -27,7 +28,7 @@ LuBu config must have fields "modules", "modules" and "output". Also you can add
         "mul": "src/mul.lua"
     },
     "dll": {
-        "lfs": "../example-project/src/lfs.dll"
+        "lfs": "/src/lfs.dll"
     },
     "output": "dist/release.lua",
     "const": {
