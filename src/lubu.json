@@ -4,6 +4,9 @@
         "add": "../example-project/src/add.lua",
         "mul": "../example-project/src/mul.lua"
     },
+    "dll": {
+        "lfs": "../example-project/src/lfs.dll"
+    },
     "output": "../example-project/dist/release.lua",
     "const": {}
 }
