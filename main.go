@@ -55,7 +55,7 @@ func main() {
 	log.Printf("Base path: \"%s\"", basePath)
 
 	lines := Generate(basePath, config)
-	outFilePath := basePath + "/" + config.Output
+	outFilePath := basePath + config.Output
 	err = os.WriteFile(outFilePath, []byte(strings.Join(lines, "\n")), 0644)
 	if err != nil {
 		log.Fatalf("Error writing output file: %s\n", err.Error())

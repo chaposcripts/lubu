@@ -8,5 +8,5 @@
         "VERSION": "1.1a"
     },
     "main": "./src/init.lua",
-    "output": "dist/release.lua"
+    "output": "./dist/release.lua"
 }
