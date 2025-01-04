@@ -1,5 +1,8 @@
-local add = require('add');
-local mul = require('mul');
+print('Current script directory:', require('lfs').currentdir());
+local sum, mul = require('sum'), require('mul');
 
-print(add(10, 5));
-print(mul(2, 2));
+local a, b, c = 1, 5, 10;
+print(sum(a, b));
+print(sum(b, c));
+print(mul(a, b));
+print(mul(c, b));

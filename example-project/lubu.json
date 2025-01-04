@@ -1,10 +1,12 @@
 {
-    "main": "src/init.lua",
     "modules": {
-        "add": "src\\add.lua",
-        "init": "src\\init.lua",
-        "mul": "src\\mul.lua"
+        "sum": "./src/sum.lua",
+        "mul": "./src/mul.lua",
+        "lfs": "./src/lfs.dll"
     },
-    "output": "dist/release.lua",
-    "const": {}
+    "const": {
+        "VERSION": "1.1a"
+    },
+    "main": "./src/init.lua",
+    "output": "dist/release.lua"
 }
