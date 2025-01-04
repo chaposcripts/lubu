@@ -15,27 +15,22 @@ See [`example-project`](https://github.com/chaposcripts/lubu/tree/main/example-p
 ## LuBu Config
 LuBu config must have fields "modules", "modules" and "output". Also you can add some constants in "const"
 1. `main` - `string` - path to main file
-2. `modules` - `map[string]string` - **.lua** modules list, where key is module name (using in `require()`), value is a path to module
-3. `dll` - `map[string]string` - **.dll** modules list, where key is module name (using in `require()`), value is a path to module
+2. `modules` - `map[string]string` - **.lua / .dll** modules list, where key is module name (used in `require()`), value is a path to module
 4. `output` - `string` - path to bundled file
 5. `const` - `map[string]interface{}` - constants list, where key is variable name and value is a constant value. **Only string, number and bool are supported**
   
 ```json
 {
-    "main": "src/init.lua",
     "modules": {
-        "add": "src/add.lua",
-        "mul": "src/mul.lua"
+        "sum": "./src/sum.lua",
+        "mul": "./src/mul.lua",
+        "lfs": "./src/lfs.dll"
     },
-    "dll": {
-        "lfs": "/src/lfs.dll"
-    },
-    "output": "dist/release.lua",
     "const": {
-        "DEV": false,
-        "BUNDLED": true,
-        "VERSION": "1.0.0"
-    }
+        "VERSION": "1.1a"
+    },
+    "main": "./src/init.lua",
+    "output": "./dist/release.lua"
 }
 ```
 Also you can find auto json generator in `example` folder. Run it using `go run generate-lubu-config.go`
@@ -47,6 +42,7 @@ my-project/
 │   ├── init.lua
 │   ├── add.lua
 │   └── mul.lua
+├── lubu.exe
 └── lubu.json
 ```
 
