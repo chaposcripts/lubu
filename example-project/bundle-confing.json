@@ -1,0 +1,9 @@
+{
+    "main": "src/init.lua",
+    "modules": {
+        "my-math": "src/my-math.lua",
+        "utils": "src/utils.lua",
+        "lfs": "src/lfs.dll"
+    },
+    "out": "dist/bundled.lua"
+}

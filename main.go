@@ -1,64 +1,60 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
+
+	"./bundler"
+	"./config"
+	"./watcher"
 )
 
-const logo = `
-	_           ____        
-	| |         |  _ \       
-	| |    _   _| |_) |_   _ 
-	| |   | | | |  _ <| | | |
-	| |___| |_| | |_) | |_| |
-	|______\__,_|____/ \__,_|
-	
-	https://github.com/chaposcripts/lubu	
-`
-
-type Config struct {
-	Modules map[string]string      `json:"modules"`
-	Main    string                 `json:"main"`
-	Output  string                 `json:"output"`
-	Const   map[string]interface{} `json:"const"`
-}
-
 func main() {
-	fmt.Print(logo)
-	log.SetPrefix("LuBu ")
+	log.Println("LuBu Started!")
+	log.Println("Thanks for using LuBu! GitHub: https://github.com/chaposcripts/lubu/")
 	if len(os.Args) < 2 {
-		log.Panicln("Error, no input file")
+		log.Fatalf("Error, config file not found!")
 	}
-	jsonAbsolutePath, err := filepath.Abs(os.Args[1])
+	absoluteConfigPath, err := filepath.Abs(os.Args[1])
 	if err != nil {
-		log.Fatalf("Error: %s", err.Error())
+		log.Fatalf("pizda")
 	}
-	basePath := filepath.Dir(jsonAbsolutePath)
-	bytes, err := os.ReadFile(os.Args[1])
-	if err != nil {
-		log.Fatalf("Error reading config file: %s\n", err.Error())
+	basePath, _ := filepath.Split(absoluteConfigPath)
+	cfgPath := absoluteConfigPath
+
+	if !filepath.IsAbs(cfgPath) {
+		cfgPath, _ = filepath.Abs(cfgPath)
 	}
 
-	var config Config
-	err = json.Unmarshal(bytes, &config)
+	// Read config
+	cfg, err := config.Read(cfgPath)
 	if err != nil {
-		log.Fatalf("Error reading JSON: %s\n", err.Error())
-	}
-	if config.Main == "" || config.Output == "" {
-		log.Fatalf("Error, field \"main\" or \"output\" is empty\n")
+		log.Fatalf("Error reading config: %v", err)
 	}
 
-	log.Printf("Base path: \"%s\"", basePath)
-
-	lines := Generate(basePath, config)
-	outFilePath := basePath + config.Output
-	err = os.WriteFile(outFilePath, []byte(strings.Join(lines, "\n")), 0644)
-	if err != nil {
-		log.Fatalf("Error writing output file: %s\n", err.Error())
+	if cfg.Main == "" {
+		log.Fatalf("Error, main file is empty!")
 	}
-	log.Printf("Done! Saved to \"%s\"\n", outFilePath)
+	if cfg.Out == "" {
+		log.Fatalf("Error, output file is empty!")
+	}
+
+	// Validate output file path
+	if !filepath.IsAbs(cfg.Out) {
+		cfg.Out = filepath.Join(basePath, cfg.Out)
+	}
+
+	// Print used paths
+	log.Println("Base Path:", basePath)
+	log.Println("Config Path:", cfgPath)
+	log.Println("Output Path:", cfg.Out)
+
+	bundler.Bundle(basePath, cfg)
+	if cfg.WatcherDelay > 0 {
+		log.Println("Watcher started! Waiting for files change...")
+		watcher.StartWatcher(basePath, cfg, absoluteConfigPath)
+	} else {
+		log.Println("Watcher disabled. \"watcher_delay\" must be more than zero!")
+	}
 }
