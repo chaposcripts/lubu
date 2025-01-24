@@ -13,11 +13,7 @@ import (
 var lastCheckedTime map[string]time.Time = map[string]time.Time{}
 
 func StartWatcher(basePath string, cfg config.Config, configFile string) {
-	// watcherCfg := cfg
-	// watcherCfg.Modules["INIT"] = cfg.Main
-	// watcherCfg.Modules["CONFIG_FILE"] = configFile
-	for range time.NewTicker(time.Second * time.Duration(cfg.WatcherDelay)).C {
-		// Check modules
+	for range time.NewTicker(time.Millisecond * time.Duration(cfg.WatcherDelay)).C {
 		for _, file := range cfg.Modules {
 			if checkFile(file, basePath) || checkFile(cfg.Main, basePath) {
 				log.Printf("Watcher: file \"%s\" was changed, re-bundling...", file)
@@ -39,7 +35,6 @@ func checkFile(file, basePath string) bool {
 	modTime := fileStat.ModTime()
 	oldModTime, oldModTimeExists := lastCheckedTime[filePath]
 	if !oldModTimeExists {
-		// log.Printf("Watcher: added file to cache: %s")
 		lastCheckedTime[filePath] = modTime
 		return false
 	}
