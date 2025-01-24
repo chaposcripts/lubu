@@ -18,19 +18,21 @@ LuBu config must have fields "modules", "modules" and "output". Also you can add
 2. `modules` - `map[string]string` - **.lua / .dll** modules list, where key is module name (used in `require()`), value is a path to module
 4. `output` - `string` - path to bundled file
 5. `const` - `map[string]interface{}` - constants list, where key is variable name and value is a constant value. **Only string, number and bool are supported**
+6. `watcher_delay` - `float64` - delay for "watcher" in milliseconds. Watcher will check files modification time with this interval. If one of files was changed lubu will re-bundle your script.
   
 ```json
 {
     "modules": {
-        "sum": "./src/sum.lua",
-        "mul": "./src/mul.lua",
-        "lfs": "./src/lfs.dll"
+        "sum": "src/sum.lua",
+        "mul": "src/mul.lua",
+        "lfs": "src/lfs.dll"
     },
     "const": {
         "VERSION": "1.1a"
     },
-    "main": "./src/init.lua",
-    "output": "./dist/release.lua"
+    "main": "src/init.lua",
+    "output": "dist/release.lua",
+    "watcher_delay": 250
 }
 ```
 Also you can find auto json generator in `example` folder. Run it using `go run generate-lubu-config.go`
