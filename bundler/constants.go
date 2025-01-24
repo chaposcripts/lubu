@@ -14,7 +14,7 @@ func GenerateConstants(cfg config.Config) string {
 	log.Println("Generating constants...")
 	constantsCode := []string{
 		"LUBU_BUNDLED = true;",
-		fmt.Sprintf("LUBU_BUNDLED_AT = \"%s\";", strconv.Itoa(int(time.Now().Unix()))),
+		fmt.Sprintf("LUBU_BUNDLED_AT = %s;", strconv.Itoa(int(time.Now().Unix()))),
 	}
 	for name, value := range cfg.Constants {
 		switch value.(type) {
