@@ -34,13 +34,8 @@ func checkFile(file, basePath string) bool {
 	}
 	modTime := fileStat.ModTime()
 	oldModTime, oldModTimeExists := lastCheckedTime[filePath]
-	if !oldModTimeExists {
+	if !oldModTimeExists || modTime != oldModTime {
 		lastCheckedTime[filePath] = modTime
-		return false
 	}
-	if modTime != oldModTime {
-		lastCheckedTime[filePath] = modTime
-		return true
-	}
-	return false
+	return modTime != oldModTime
 }
