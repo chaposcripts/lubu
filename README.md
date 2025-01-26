@@ -54,5 +54,5 @@ my-project/
 3. `go build` or use `go build && lubu.exe lubu.json` to run it after building
 
 ## TODO
-1. add .dll modules support (Done!)
-2. add resource bundler (ttf, png, etc.)
+* [x] add .dll modules support (Done!)
+* [ ] add resource bundler (ttf, png, etc.)
