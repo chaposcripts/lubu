@@ -31,7 +31,7 @@ LuBu config must have fields "modules", "modules" and "output". Also you can add
         "VERSION": "1.1a"
     },
     "main": "src/init.lua",
-    "output": "dist/release.lua",
+    "out": "dist/release.lua",
     "watcher_delay": 250
 }
 ```
