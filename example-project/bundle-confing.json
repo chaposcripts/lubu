@@ -2,9 +2,10 @@
     "main": "src/init.lua",
     "modules": {
         "my-math": "src/my-math.lua",
-        "utils": "src/utils.lua",
-        "lfs": "src/lfs.dll"
+        "utils": "src/utils.lua"
     },
-    "out": "dist/bundled.lua",
-    "watcher_delay": 250
+    "resource": {
+        "pizda.jpg": "assets/mimg.jpg"
+    },
+    "out": "dist/bundled.lua"
 }

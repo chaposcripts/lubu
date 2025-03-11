@@ -38,6 +38,7 @@ func Generate(basePath string, cfg config.Config) string {
 ]]`,
 		dllFunc,
 		GenerateConstants(cfg),
+		GenerateResources(basePath, cfg),
 		GenerateModules(basePath, cfg),
 	}
 

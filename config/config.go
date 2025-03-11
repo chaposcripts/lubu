@@ -11,6 +11,7 @@ type Config struct {
 	Modules      map[string]string      `json:"modules"`
 	WatcherDelay float64                `json:"watcher_delay"`
 	Constants    map[string]interface{} `json:"const"`
+	Resource     map[string]string      `json:"resource"`
 }
 
 func Read(file string) (cfg Config, err error) {
