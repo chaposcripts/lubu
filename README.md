@@ -55,4 +55,4 @@ my-project/
 
 ## TODO
 * [x] add .dll modules support (Done!)
-* [ ] add resource bundler (ttf, png, etc.)
+* [x] add resource bundler (ttf, png, etc.)
