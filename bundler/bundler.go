@@ -49,7 +49,7 @@ func Bundle(basePath string, cfg config.Config) {
 	outDir, _ := filepath.Split(cfg.Out)
 	log.Printf("Writing code to \"%s\"", cfg.Out)
 
-	err := os.MkdirAll(outDir, 0644)
+	err := os.MkdirAll(outDir, 0755)
 	if err != nil {
 		log.Fatalf("Error creating directories for output file: %s", err.Error())
 	}
