@@ -54,6 +54,7 @@ func collectLuaModules(rootDir string) (map[string]string, error) {
 		}
 
 		relPath = filepath.ToSlash(relPath)
+		relPath = "src/" + relPath
 		modulePath := strings.TrimSuffix(relPath, ext)
 		moduleName := strings.ReplaceAll(modulePath, "/", ".")
 		moduleName = strings.TrimPrefix(moduleName, "src.")
