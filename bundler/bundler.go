@@ -54,6 +54,7 @@ func Generate(basePath string, cfg config.Config) string {
 	code := strings.Join(items, "\n")
 	if cfg.RemoveComments {
 		code = RemoveComments(code)
+		log.Println("All comments was removed!")
 	}
 
 	return code
@@ -64,11 +65,9 @@ func Bundle(basePath string, cfg config.Config) {
 	log.Printf("Writing code to \"%s\"", cfg.Out)
 
 	code := Generate(basePath, cfg)
-	// if cfg.PrepareForObfuscation {
-	// code = PrepareForObfuscation(code)
-	// }
-	log.Printf("Preparing number vars and tables for obfuscation...")
-
+	if cfg.Minify {
+		code = MinifyCode(code)
+	}
 	err := os.MkdirAll(outDir, 0755)
 	if err != nil {
 		log.Fatalf("Error creating directories for output file: %s", err.Error())

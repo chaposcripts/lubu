@@ -49,6 +49,9 @@ func main() {
 	log.Println("Base Path:", basePath)
 	log.Println("Config Path:", cfgPath)
 	log.Println("Output Path:", cfg.Out)
+	if cfg.PrepareForObfuscation {
+		log.Println("Prepare for obfuscation is ENABLED!")
+	}
 
 	bundler.Bundle(basePath, cfg)
 	if cfg.WatcherDelay > 0 {

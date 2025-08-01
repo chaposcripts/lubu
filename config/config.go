@@ -14,6 +14,7 @@ type Config struct {
 	Resource              map[string]string      `json:"resource"`
 	PrepareForObfuscation bool                   `json:"prepare_for_obfuscation"`
 	RemoveComments        bool                   `json:"remove_comments"`
+	Minify                bool                   `json:"minify"`
 }
 
 func Read(file string) (cfg Config, err error) {

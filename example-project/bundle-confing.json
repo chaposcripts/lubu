@@ -3,5 +3,6 @@
     "modules": {},
     "out": "dist/bundled.lua",
     "prepare_for_obfuscation": true,
-    "remove_comments": true
+    "remove_comments": true,
+    "minify": true
 }

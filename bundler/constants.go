@@ -12,10 +12,6 @@ import (
 
 func GenerateConstants(cfg config.Config) string {
 	log.Println("Generating constants...")
-	// time :=
-	// if cfg.PrepareForObfuscation {
-	// 	time = fmt.Sprintf("tonumber(\"%s\")", time)
-	// }
 	constantsCode := []string{
 		"LUBU_BUNDLED = true;",
 		fmt.Sprintf("LUBU_BUNDLED_AT = %s;", strconv.Itoa(int(time.Now().Unix()))),
