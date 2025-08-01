@@ -7,7 +7,7 @@ local __G = _G;
 
 -- Constants
 LUBU_BUNDLED = true;
-LUBU_BUNDLED_AT = 1754051946;
+LUBU_BUNDLED_AT = 1754054962;
 
 
 -- Module "my-math" (from D:\dev\lubu\example-project\src\my-math.lua)
@@ -41,74 +41,86 @@ end);
 -- Init (from D:\dev\lubu\example-project\src\init.lua) 
 LUBU_ENTRY_POINT = (function()
 -- numbers
-local num = tonumber("1");
+local localNum = tonumber("1");
 globalNum = tonumber("99");
 
--- table
-t = {
-    fieldWithNumber = tonumber("3.14"),
-    [tonumber("2")] = 'test',
-    ['34'] = 'test2',
-    ["22"] = 'a',
-    fns = {},
+local t = {
+    [tonumber("1")] = tonumber("1"),
+    ['2'] = 'two',
+    funcs = {}
 };
 
-local char_func_map = {
-  [ '"' ] = 'placeholder',
-  [ "0" ] = 'placeholder',
-  [ "1" ] = 'placeholder',
-  [ "2" ] = 'placeholder',
-  [ "3" ] = 'placeholder',
-  [ "4" ] = 'placeholder',
-  [ "5" ] = 'placeholder',
-  [ "6" ] = 'placeholder',
-  [ "7" ] = 'placeholder',
-  [ "8" ] = 'placeholder',
-  [ "9" ] = 'placeholder',
-  [ "-" ] = 'placeholder',
-  [ "t" ] = 'placeholder',
-  [ "f" ] = 'placeholder',
-  [ "n" ] = 'placeholder',
-  [ "[" ] = 'placeholder',
-  [ "{" ] = 'placeholder',
-}
-
-
-t['fns']['test'] = function()
-
+t['a'] = function() end
+t.funcs['a'] = function() end
+t['funcs']['method'] = function(self)
+    print(tostring(self));
 end
 
-t['fns']['method'] = function(self)
-
+print('Number inside string will NOT replaced to "tonumber": 999');
+for i = tonumber("1"), tonumber("100") do
+    print(i .. '%');
 end
 
-t['a'] = function()
 
-end
+---@OBFIGNORE
+local anotherNumber = 123; -- this number will NOT replaced to "tonumber" cuz of "ignoring zone"
+---@ENDOBFIGNORE
 
-t['b'] = function()
+t['a']();
+t['funcs']['a']();
+t['funcs']['method'](t['funcs']);
+print([[
+    test3
+    1
+    2
+]]);
 
-end
 
-t['c'] = function(n)
-    print('Your number is (it may be 99)', n)
-end
+-- -- table
+-- t = {
+--     fieldWithNumber = tonumber("3.14"),
+--     [tonumber("2")] = 'test',
+--     ['34'] = 'test2',
+--     ["22"] = 'a',
+--     fns = {},
+-- };
 
-t['z'] = function(self)
 
-end
+-- t.fns['test'] = function()
 
--- table field index
-print(tonumber("183482"))
-print(t['a'](tonumber("1")));
-print(t.fieldWithNumber);
-print(t['b'](t, 'hello'))
-t['c'](
-    tonumber("1")
-)
+-- end
 
-for i = tonumber("1"), tonumber("10") do
-    print(i)
-end
+-- t['fns']['method'] = function(self)
+
+-- end
+
+-- t['a'] = function()
+
+-- end
+
+-- t['b'] = function()
+
+-- end
+
+-- t['c'] = function(n)
+--     print('Your number is (it may be 99)', n)
+-- end
+
+-- t['z'] = function(self)
+
+-- end
+
+-- -- table field index
+-- print(tonumber("183482"))
+-- print(t['a'](tonumber("1")));
+-- print(t.fieldWithNumber);
+-- print(t['b'](t, 'hello'))
+-- t['c'](
+--     tonumber("1")
+-- )
+
+-- for i = tonumber("1"), tonumber("10") do
+--     print(i)
+-- end
 end);
 LUBU_ENTRY_POINT();

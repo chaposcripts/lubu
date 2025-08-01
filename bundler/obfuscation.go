@@ -11,17 +11,69 @@ var GLOBAL_TABLES []string = []string{
 	"lua_thread",
 }
 
+type ObfuscationSettings struct {
+	ReplaceNumbers             bool `json:"replace_numbers"`
+	ReplaceFunctionCalls       bool `json:"replace_function_calls"`
+	ReplaceFunctionDefinitions bool `json:"replace_function_definitions"`
+}
+
 func PrepareForObfuscation(code string) string {
-	code = replaceFunctionDefinitions(code)
-	code = replaceFunctionCalls(code)
-	code = replaceNumbers(code)
-	return code
+	parts := splitIgnoredBlocks(code)
+	var result strings.Builder
+	for _, part := range parts {
+		if part.ignored {
+			result.WriteString(part.content)
+		} else {
+			processed := replaceFunctionDefinitions(part.content)
+			processed = replaceFunctionCalls(processed)
+			processed = replaceNumbers(processed)
+			result.WriteString(processed)
+		}
+	}
+
+	return result.String()
+}
+
+type codePart struct {
+	content string
+	ignored bool
+}
+
+func splitIgnoredBlocks(code string) []codePart {
+	var parts []codePart
+	startRegex := regexp.MustCompile(`---@OBFIGNORE`)
+	endRegex := regexp.MustCompile(`---@ENDOBFIGNORE`)
+
+	lastPos := 0
+	for {
+		startMatch := startRegex.FindStringIndex(code[lastPos:])
+		if startMatch == nil {
+			if lastPos < len(code) {
+				parts = append(parts, codePart{content: code[lastPos:], ignored: false})
+			}
+			break
+		}
+
+		startPos := lastPos + startMatch[0]
+		if lastPos < startPos {
+			parts = append(parts, codePart{content: code[lastPos:startPos], ignored: false})
+		}
+		endMatch := endRegex.FindStringIndex(code[startPos:])
+		if endMatch == nil {
+			parts = append(parts, codePart{content: code[startPos:], ignored: true})
+			break
+		}
+
+		endPos := startPos + endMatch[1]
+		parts = append(parts, codePart{content: code[startPos:endPos], ignored: true})
+		lastPos = endPos
+	}
+
+	return parts
 }
 
 func replaceNumbers(code string) string {
-	processed := make(map[int]bool)
-
-	protectedRegex := regexp.MustCompile(`(?s)(\[[[:space:]]*["'].*?["'][[:space:]]*\])|(".*?")|('.*?')`)
+	protectedRegex := regexp.MustCompile(`(?s)(\[\[.*?\]\])|(\[[[:space:]]*["'].*?["'][[:space:]]*\])|(".*?")|('.*?')`)
 	protectedAreas := protectedRegex.FindAllStringIndex(code, -1)
 
 	isProtected := func(pos int) bool {
@@ -53,10 +105,9 @@ func replaceNumbers(code string) string {
 			}
 		}
 
-		if !skip && !isProtected(start) && !processed[start] {
+		if !skip && !isProtected(start) {
 			number := code[start:end]
 			result.WriteString(fmt.Sprintf(`tonumber("%s")`, number))
-			processed[start] = true
 		} else {
 			result.WriteString(code[start:end])
 		}
@@ -110,25 +161,32 @@ func replaceFunctionDefinitions(code string) string {
 }
 
 func replaceFunctionCalls(code string) string {
-	code = regexp.MustCompile(`([\w_]+)((\.[\w_]+|\[\'[\w_]+\'\])+)\s*=\s*function`).
+	code = regexp.MustCompile(`([\w_]+(?:\.[\w_]+)*):([\w_]+)\s*\((.*?)\)`).
 		ReplaceAllStringFunc(code, func(match string) string {
-			parts := regexp.MustCompile(`([\w_]+)((\.[\w_]+|\[\'[\w_]+\'\])+)\s*=\s*function`).FindStringSubmatch(match)
-			base := parts[1]
-			fields := parts[2]
+			parts := regexp.MustCompile(`([\w_]+(?:\.[\w_]+)*):([\w_]+)\s*\((.*?)\)`).FindStringSubmatch(match)
+			tablePath := parts[1]
+			methodName := parts[2]
+			args := parts[3]
 
-			re := regexp.MustCompile(`\.([\w_]+)|\[\'([\w_]+)\'\]`)
-			matches := re.FindAllStringSubmatch(fields, -1)
+			pathParts := strings.Split(tablePath, ".")
+			var contextBuilder strings.Builder
+			contextBuilder.WriteString(pathParts[0])
+			for _, part := range pathParts[1:] {
+				contextBuilder.WriteString(fmt.Sprintf("['%s']", part))
+			}
+			context := contextBuilder.String()
 
-			result := base
-			for _, m := range matches {
-				if m[1] != "" {
-					result += fmt.Sprintf(`['%s']`, m[1])
-				} else {
-					result += fmt.Sprintf(`['%s']`, m[2])
-				}
+			pathParts = strings.Split(tablePath, ".")
+			var tableAccess strings.Builder
+			tableAccess.WriteString(pathParts[0])
+			for _, part := range pathParts[1:] {
+				tableAccess.WriteString(fmt.Sprintf("['%s']", part))
 			}
 
-			return result + " = function"
+			if strings.TrimSpace(args) == "" {
+				return fmt.Sprintf("%s['%s'](%s)", tableAccess.String(), methodName, context)
+			}
+			return fmt.Sprintf("%s['%s'](%s, %s)", tableAccess.String(), methodName, context, args)
 		})
 
 	code = regexp.MustCompile(`([\w_]+)((?:\.[\w_]+|\[\'[\w_]+\'\])+)(\([^)]*\))`).
@@ -150,19 +208,6 @@ func replaceFunctionCalls(code string) string {
 				}
 			}
 			return result + args
-		})
-
-	code = regexp.MustCompile(`([\w_]+):([\w_]+)(\([^)]*\))`).
-		ReplaceAllStringFunc(code, func(match string) string {
-			parts := regexp.MustCompile(`([\w_]+):([\w_]+)(\([^)]*\))`).FindStringSubmatch(match)
-			table := parts[1]
-			method := parts[2]
-			args := parts[3]
-
-			if len(args) > 2 {
-				return fmt.Sprintf(`%s['%s'](%s, %s`, table, method, table, args[1:])
-			}
-			return fmt.Sprintf(`%s['%s'](%s%s`, table, method, table, args[1:])
 		})
 
 	return code
