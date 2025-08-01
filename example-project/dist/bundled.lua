@@ -7,7 +7,7 @@ local __G = _G;
 
 -- Constants
 LUBU_BUNDLED = true;
-LUBU_BUNDLED_AT = tonumber("1754065812");
+LUBU_BUNDLED_AT = tonumber("1754074449");
 ARTUR_DILBAROV = "PIDORAS, GOVNOJUY, INCEL I DOLBAEB";
 TRUTH = "vktr shplv i l u";
 

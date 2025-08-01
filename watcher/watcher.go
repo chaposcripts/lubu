@@ -14,13 +14,19 @@ var lastCheckedTime map[string]time.Time = map[string]time.Time{}
 
 func StartWatcher(basePath string, cfg config.Config, configFile string) {
 	for range time.NewTicker(time.Millisecond * time.Duration(cfg.WatcherDelay)).C {
-		for _, file := range cfg.Modules {
-			if checkFile(file, basePath) || checkFile(cfg.Main, basePath) {
-				log.Printf("Watcher: file \"%s\" was changed, re-bundling...", file)
-				bundler.Bundle(basePath, cfg)
-			}
+		hasChanged, file := checkAllFiles(basePath, cfg)
+		if hasChanged || checkFile(cfg.Main, basePath) {
+			log.Printf("Watcher: file \"%s\" was changed, re-bundling...", file)
+			bundler.Bundle(basePath, cfg)
 		}
 	}
+}
+
+func checkAllFiles(basePath string, cfg config.Config) (bool, string) {
+	for _, file := range cfg.Modules {
+		return checkFile(file, basePath), file
+	}
+	return false, ""
 }
 
 func checkFile(file, basePath string) bool {
@@ -34,8 +40,8 @@ func checkFile(file, basePath string) bool {
 	}
 	modTime := fileStat.ModTime()
 	oldModTime, oldModTimeExists := lastCheckedTime[filePath]
-	if !oldModTimeExists || modTime != oldModTime {
+	if !oldModTimeExists || (modTime != oldModTime && oldModTime.Unix() > 0) {
 		lastCheckedTime[filePath] = modTime
 	}
-	return modTime != oldModTime
+	return modTime != oldModTime && oldModTime.Unix() > 0
 }
