@@ -1,48 +1,50 @@
--- Это однострочный комментарий
-local x = 5  -- inline комментарий
+require('utils');
+local MyMath = require('my-math');
 
---[[
-  Это многострочный
-  комментарий
-]]
-
---[=[
-  Еще один вариант
-  многострочного комментария
-]=]
-
-print("Hello")  --[[ коммент ]] print("World")
--- numbers
-local localNum = 1;
-globalNum = 99;
-
-local t = {
-    [1] = 1,
-    ['2'] = 'two',
-    funcs = {}
+local numbers = {
+	1,
+	10,
+	81,
+	28,
+	19
 };
 
-function t.a() end
-function t.funcs.a() end
-function t.funcs:method()
-    print(tostring(self));
+print('Numbers:');
+Utils.printTable(numbers);
+print('Sum:', MyMath.sum(table.unpack(numbers)));
+
+-- ObfuscationPrepare example:
+local Developer = {
+	name = 'Dmitry',
+	age = 21,
+	---@OBFIGNORE
+	height = 191,
+	---@ENDOBFIGNORE
+	weight = 80,
+	citizenship = 'Russian Federation',
+	skills = {}
+};
+
+function Developer:say(...)
+	print(('%s says: %s'):format(self.name, table.concat({ ... }, ' ')));
 end
 
-print('Number inside string will NOT replaced to "tonumber": 999');
-for i = 1, 100 do
-    print(i .. '%');
+function Developer:learn(skill)
+	table.insert(self.skills, skill);
 end
 
+function Developer:hear(text)
+	local text = text:lower();
+	if (text == 'how old are you?') then
+		self:say(('i\'m %d years old!'):format(self.age));
+	elseif (text == 'which skills do you have?') then
+		if (#self.skills == 0) then
+			self:say('I don\'t have any skills :(');
+		else
+			self:say('I have', table.concat(self.skills, ', '), 'skills!');
+		end
+	end
+end
 
----@OBFIGNORE
-local anotherNumber = 123; -- this number will NOT replaced to "tonumber" cuz of "ignoring zone"
----@ENDOBFIGNORE
-
-t.a();
-t.funcs.a();
-t.funcs:method();
-print([[
-    test3
-    1
-    2
-]]);
+Developer:say('Hello!');
+Developer:hear('which skills do you have?')

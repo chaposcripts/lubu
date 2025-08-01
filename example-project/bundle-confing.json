@@ -1,8 +1,14 @@
 {
     "main": "src/init.lua",
-    "modules": {},
     "out": "dist/bundled.lua",
+    "modules": {
+        "utils": "src/utils.lua",
+        "my-math": "src/my-math.lua"
+    },
+    "const": {
+        "ARTUR_DILBAROV": "PIDORAS, GOVNOJUY, INCEL I DOLBAEB",
+        "TRUTH": "vktr shplv i l u"
+    },
     "prepare_for_obfuscation": true,
-    "remove_comments": true,
-    "minify": true
+    "remove_comments": false
 }

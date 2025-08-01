@@ -10,6 +10,12 @@ import (
 	"github.com/chaposcripts/lubu/watcher"
 )
 
+const (
+	LUBU_COMMAND_OBFUSCATE_START = "---@LUBU:OBFIGNORE"
+	LUBU_COMMAND_OBFUSCATE_END   = "---@LUBU:ENDOBFIGNORE"
+	LUBU_COMMAND                 = ""
+)
+
 func main() {
 	log.Println("LuBu Started!")
 	log.Println("Thanks for using LuBu! GitHub: https://github.com/chaposcripts/lubu/")

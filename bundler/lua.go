@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func GenerateLua(basePath, name, file string, isMainFile, obfuscate bool) string {
@@ -18,6 +19,9 @@ func GenerateLua(basePath, name, file string, isMainFile, obfuscate bool) string
 	code := string(bytes)
 	if obfuscate {
 		code = PrepareForObfuscation(code)
+		if isMainFile {
+			code = strings.Replace(code, "function main()", "function __G.main()", 1)
+		}
 	}
 	if isMainFile {
 		return fmt.Sprintf(INIT_PATTERN, fullPath, code)

@@ -1,6 +1,7 @@
 package bundler
 
 import (
+	"bytes"
 	"fmt"
 	"regexp"
 	"strings"
@@ -17,6 +18,26 @@ type ObfuscationSettings struct {
 	ReplaceFunctionDefinitions bool `json:"replace_function_definitions"`
 }
 
+func replaceStringsToBytes(code string) string {
+	re := regexp.MustCompile(`(['"])(.*?)(['"])`)
+	result := re.ReplaceAllStringFunc(code, func(match string) string {
+		groups := re.FindStringSubmatch(match)
+		if len(groups) < 4 {
+			return match
+		}
+		content := groups[2]
+		var buffer bytes.Buffer
+		for i, char := range content {
+			if i > 0 {
+				buffer.WriteString("..")
+			}
+			buffer.WriteString(fmt.Sprintf("string.char(%d)", char))
+		}
+		return buffer.String()
+	})
+	return result
+}
+
 func PrepareForObfuscation(code string) string {
 	parts := splitIgnoredBlocks(code)
 	var result strings.Builder
@@ -27,6 +48,7 @@ func PrepareForObfuscation(code string) string {
 			processed := replaceFunctionDefinitions(part.content)
 			processed = replaceFunctionCalls(processed)
 			processed = replaceNumbers(processed)
+			// processed = replaceStringsToBytes(processed)
 			result.WriteString(processed)
 		}
 	}
