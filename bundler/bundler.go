@@ -17,12 +17,12 @@ func GenerateModules(basePath string, cfg config.Config) string {
 	modulesCode := []string{}
 	for name, file := range cfg.Modules {
 		if strings.HasSuffix(file, ".lua") {
-			modulesCode = append(modulesCode, GenerateLua(basePath, name, file, false))
+			modulesCode = append(modulesCode, GenerateLua(basePath, name, file, false, cfg.PrepareForObfuscation))
 		} else {
 			modulesCode = append(modulesCode, GenerateDll(basePath, name, file))
 		}
 	}
-	modulesCode = append(modulesCode, GenerateLua(basePath, "init", cfg.Main, true))
+	modulesCode = append(modulesCode, GenerateLua(basePath, "init", cfg.Main, true, cfg.PrepareForObfuscation))
 	return strings.Join(modulesCode, "\n")
 }
 

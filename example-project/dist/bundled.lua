@@ -4,7 +4,7 @@ local __G = _G;
 
 
 LUBU_BUNDLED = true;
-LUBU_BUNDLED_AT = 1754058220;
+LUBU_BUNDLED_AT = tonumber("1754059361");
 
 
 

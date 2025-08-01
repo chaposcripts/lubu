@@ -7,14 +7,18 @@ import (
 	"path/filepath"
 )
 
-func GenerateLua(basePath, name, file string, isMainFile bool) string {
+func GenerateLua(basePath, name, file string, isMainFile, obfuscate bool) string {
 	fullPath := filepath.Join(basePath, file)
 	log.Printf("Bundling \"%s\" module from: %s", name, fullPath)
 	bytes, err := os.ReadFile(fullPath)
 	if err != nil {
 		log.Fatalf("Error reading module \"%s\" (%s):\n\t%v", name, file, err)
 	}
-	code := PrepareForObfuscation(string(bytes))
+
+	code := string(bytes)
+	if obfuscate {
+		code = PrepareForObfuscation(code)
+	}
 	if isMainFile {
 		return fmt.Sprintf(INIT_PATTERN, fullPath, code)
 	}
