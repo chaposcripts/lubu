@@ -1,3 +1,17 @@
+-- Это однострочный комментарий
+local x = 5  -- inline комментарий
+
+--[[
+  Это многострочный
+  комментарий
+]]
+
+--[=[
+  Еще один вариант
+  многострочного комментария
+]=]
+
+print("Hello")  --[[ коммент ]] print("World")
 -- numbers
 local localNum = 1;
 globalNum = 99;
@@ -32,51 +46,3 @@ print([[
     1
     2
 ]]);
-
-
--- -- table
--- t = {
---     fieldWithNumber = tonumber("3.14"),
---     [2] = 'test',
---     ['34'] = 'test2',
---     ["22"] = 'a',
---     fns = {},
--- };
-
-
--- function t.fns.test()
-
--- end
-
--- function t.fns:method()
-
--- end
-
--- function t.a()
-
--- end
-
--- t.b = function()
-
--- end
-
--- function t.c(n)
---     print('Your number is (it may be 99)', n)
--- end
-
--- function t:z()
-
--- end
-
--- -- table field index
--- print(183482)
--- print(t.a(1));
--- print(t.fieldWithNumber);
--- print(t:b('hello'))
--- t.c(
---     1
--- )
-
--- for i = 1, 10 do
---     print(i)
--- end

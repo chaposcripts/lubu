@@ -1,9 +1,7 @@
 {
     "main": "src/init.lua",
-    "modules": {
-        "my-math": "src/my-math.lua",
-        "utils": "src/utils.lua"
-    },
+    "modules": {},
     "out": "dist/bundled.lua",
-    "prepare_for_obfuscation": true
+    "prepare_for_obfuscation": true,
+    "remove_comments": true
 }

@@ -13,6 +13,7 @@ type Config struct {
 	Constants             map[string]interface{} `json:"const"`
 	Resource              map[string]string      `json:"resource"`
 	PrepareForObfuscation bool                   `json:"prepare_for_obfuscation"`
+	RemoveComments        bool                   `json:"remove_comments"`
 }
 
 func Read(file string) (cfg Config, err error) {

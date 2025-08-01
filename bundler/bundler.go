@@ -51,7 +51,12 @@ func Generate(basePath string, cfg config.Config) string {
 		GenerateModules(basePath, cfg),
 	}
 
-	return strings.Join(items, "\n")
+	code := strings.Join(items, "\n")
+	if cfg.RemoveComments {
+		code = RemoveComments(code)
+	}
+
+	return code
 }
 
 func Bundle(basePath string, cfg config.Config) {
