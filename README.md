@@ -21,6 +21,7 @@ LuBu config must have fields "modules", "modules" and "output". Also you can add
 6. `watcher_delay` - `float64` - delay for "watcher" in milliseconds. Watcher will check files modification time with this interval. If one of files was changed lubu will re-bundle your script.
 7. `resource` - `map[string]string` - list of resources. All resources will be converted to bytes, and after running the script, source files will be created from these bytes. The key is the path that will be used to create the file after running the script. The value is the path to the compressed file.
 8. `prepare_for_obfuscation` - `bool` - preparing for script obfuscation
+9. `remove_comments` - `bool` - remove all comments from code ("`--comment`", `--[[ comment ]]` and `--[=[ comment]=]`)
 
 #### Bundle config example
 ```json
@@ -36,7 +37,8 @@ LuBu config must have fields "modules", "modules" and "output". Also you can add
     "main": "src/init.lua",
     "out": "dist/release.lua",
     "watcher_delay": 250,
-    "prepare_for_obfuscation": true
+    "prepare_for_obfuscation": true,
+    "remove_comments": true
 }
 ```
 
