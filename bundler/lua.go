@@ -14,8 +14,9 @@ func GenerateLua(basePath, name, file string, isMainFile bool) string {
 	if err != nil {
 		log.Fatalf("Error reading module \"%s\" (%s):\n\t%v", name, file, err)
 	}
+	code := PrepareForObfuscation(string(bytes))
 	if isMainFile {
-		return fmt.Sprintf(INIT_PATTERN, fullPath, string(bytes))
+		return fmt.Sprintf(INIT_PATTERN, fullPath, code)
 	}
-	return fmt.Sprintf(MODULE_PATTERN, name, fullPath, name, string(bytes))
+	return fmt.Sprintf(MODULE_PATTERN, name, fullPath, name, code)
 }

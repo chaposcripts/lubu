@@ -4,8 +4,6 @@
         "my-math": "src/my-math.lua",
         "utils": "src/utils.lua"
     },
-    "resource": {
-        "pizda.jpg": "assets/mimg.jpg"
-    },
-    "out": "dist/bundled.lua"
+    "out": "dist/bundled.lua",
+    "prepare_for_obfuscation": true
 }

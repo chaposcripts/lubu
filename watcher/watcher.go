@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"../bundler"
-	"../config"
+	"github.com/chaposcripts/lubu/bundler"
+	"github.com/chaposcripts/lubu/config"
 )
 
 var lastCheckedTime map[string]time.Time = map[string]time.Time{}

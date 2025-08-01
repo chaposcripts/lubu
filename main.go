@@ -5,9 +5,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"./bundler"
-	"./config"
-	"./watcher"
+	"github.com/chaposcripts/lubu/bundler"
+	"github.com/chaposcripts/lubu/config"
+	"github.com/chaposcripts/lubu/watcher"
 )
 
 func main() {

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"../config"
+	"github.com/chaposcripts/lubu/config"
 )
 
 func GenerateConstants(cfg config.Config) string {
