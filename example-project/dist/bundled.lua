@@ -7,9 +7,11 @@ local __G = _G;
 
 -- Constants
 LUBU_BUNDLED = true;
-LUBU_BUNDLED_AT = tonumber("1754074449");
+LUBU_BUNDLED_AT = tonumber("1754149639");
+n = "2";
 ARTUR_DILBAROV = "PIDORAS, GOVNOJUY, INCEL I DOLBAEB";
 TRUTH = "vktr shplv i l u";
+b = "true";
 
 
 -- Module "utils" (from D:\dev\lubu\example-project\src\utils.lua)
